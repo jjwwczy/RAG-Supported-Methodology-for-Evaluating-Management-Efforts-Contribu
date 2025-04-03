@@ -1,0 +1,65 @@
+document_upload:
+  dataset_prefix: Py_
+  duplicate_handling: skip_name
+  embedding_model: bge-m3:latest
+  enabled: true
+  folder_path: ./docs/哈尔滨
+  parse_retry_count: 5
+  parse_retry_interval: 5
+  poll_parse_status: true
+generation:
+  llm_config:
+    model: qwen-max
+    options: {}
+grid_search:
+  enabled: false
+  test_query: 该市的能源产业发展规划有哪些具体措施?
+  top_k_retrieval: 30
+  top_n_chunks_for_eval: 3
+  vector_weights_to_test:
+  - 0.0
+  - 0.2
+  - 0.3
+  - 0.5
+  - 0.7
+  - 1.0
+keywords:
+  cities_file: ./cities.txt
+  default_cities:
+  - 北京
+  - 哈尔滨
+  default_dimensions:
+  - 低碳
+  - 绿色
+  - 能源
+  - 生态
+  - 环保
+  - 科技
+  - 创新
+  - 发展
+  dimensions_file: ./dimensions.txt
+  enabled: true
+logging:
+  level: INFO
+ollama_evaluation:
+  enabled: false
+  model_config:
+    host: http://localhost:11434
+    model: qwen2.5
+    options: {}
+policy_evaluation:
+  enabled: true
+  schema_validation: true
+  score_policies: true
+  template_file: ./templates.json
+qa_example:
+  enabled: true
+  queries:
+  - 地方政府文件中有阐述进一步推进低碳技术发展的措施和方案，并基于绩效考核对政府相关部门进行奖励。文件中如果有“低碳技术相关的专项奖励制度”的相关的概念和内容，意味着在“进一步推进低碳技术发展的措施和方案”指标中的得分变量“基于绩效考核对政府相关部门的奖励”满足一个得分点，并获得25分。文件中如果有“面向所有技术的非专项奖励制度”的相关的概念和内容，意味着在“进一步推进低碳技术发展的措施和方案”指标中的得分变量“基于绩效考核对政府相关部门的奖励”满足一个得分点，并获得25分。文件中如果有“低碳技术相关的专项奖励结果”的相关的概念和内容，意味着在“进一步推进低碳技术发展的措施和方案”指标中的得分变量“基于绩效考核对政府相关部门的奖励”满足一个得分点，并获得25分。文件中如果有“面向所有技术的非专项奖励结果”的相关的概念和内容，意味着在“进一步推进低碳技术发展的措施和方案”指标中的得分变量“基于绩效考核对政府相关部门的奖励”满足一个得分点，并获得25分。每个得分变量最多可获得100分，每个得分点的分数只能被统计一次。请告诉我这些文件在得分变量“基于绩效考核对政府相关部门的奖励”下一共获得多少分。打分的依据是什么。
+  score_variable: 基于绩效考核对政府相关部门的奖励
+ragflow:
+  api_key: ragflow-E3NzM3YWI2MGQ1ZTExZjA4MmM2MDI0Mm
+  base_url: http://localhost:80
+retrieval:
+  default_vector_weight: 0.5
+  top_k: 30
