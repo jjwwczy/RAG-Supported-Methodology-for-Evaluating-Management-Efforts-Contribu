@@ -8,7 +8,7 @@
             "name": "Run AutoRAG Main Script", 
             "type": "debugpy",                
             "request": "launch",             
-            "program": "${workspaceFolder}/batch_run.py", 
+            "program": "${workspaceFolder}/main.py", 
             "console": "integratedTerminal",   
 
         }

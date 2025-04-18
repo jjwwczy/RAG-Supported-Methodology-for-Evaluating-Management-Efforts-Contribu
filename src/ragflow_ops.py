@@ -34,8 +34,8 @@ def get_dataset_by_name(client: RAGFlow, dataset_name: str, embedding_model: str
     try:
         # 尝试直接使用客户端列出所有数据集
         try:
-            datasets = client.list_datasets()
-            logging.info(f"检索到 {len(datasets) if datasets else 0} 个数据集。")
+            datasets = client.list_datasets(name=dataset_name)
+            logging.info(f"检索到 {len(datasets) if datasets else 0} 个同名数据集。")
         except Exception as list_error:
             logging.error(f"列出数据集失败: {list_error}")
             datasets = []
@@ -56,9 +56,13 @@ def get_dataset_by_name(client: RAGFlow, dataset_name: str, embedding_model: str
         '''
         论文的话不使用naive，而是使用paper：
         chunk_method="paper":
-        {"raptor": {"user_raptor": False}}
+        {"raptor": {"use_raptor": False}}
+
+        这里有个巨坑：文档里写的是user_raptor,实际上应该为use_raptor，且必须跟上prompt、maxtoken等属性的内容。
+        如果不想用deepdoc，可以用千问的模型，添加下面的属性即可。
+        "layout_recognize": "qwen-vl-plus@Tongyi-Qianwen"   "DeepDOC"    #待验证
         '''
-        parser_config = DataSet.ParserConfig( client,{"chunk_token_num":128,"delimiter":"\\n!?;。；！？","html4excel":False,"layout_recognize":True,"raptor":{"user_raptor":True}})
+        parser_config = DataSet.ParserConfig( client,{"chunk_token_num":128,"delimiter":"\\n!?;。；！？","html4excel":False,"layout_recognize":"DeepDOC","raptor":{"use_raptor":False,"prompt":"请总结以下段落。 小心数字，不要编造。 段落如下：\n{cluster_content}\n以上就是你需要总结的内容。","max_token":256,"threshold":0.10,"max_cluster":64,"random_seed":0}})
 
         create_params = {"name": dataset_name,"chunk_method":"naive",
         "parser_config":parser_config}
@@ -66,6 +70,8 @@ def get_dataset_by_name(client: RAGFlow, dataset_name: str, embedding_model: str
         # 如果提供了嵌入模型，则使用它
         if embedding_model:
             create_params["embedding_model"] = embedding_model
+            # create_params["document_parser"] ="Naive"
+
             logging.info(f"使用指定的嵌入模型: '{embedding_model}'")
         else:
             logging.info("未指定嵌入模型，将使用 RAGFlow 默认模型。")

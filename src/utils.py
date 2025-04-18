@@ -207,7 +207,7 @@ def process_response(response_str: str) -> dict:
                 
             # 为每个得分点添加带编号的属性
             result[f"得分点{i}_概念"] = str(point.get("概念", ""))
-            result[f"得分点{i}_引用块索引"] = int(point.get("引用块索引", -1))
+            result[f"得分点{i}_引用块索引"] = str(point.get("引用块索引", -1))
             result[f"得分点{i}_引用块"] = str(point.get("引用块", ""))
             result[f"得分点{i}_得分"] = int(point.get("得分", 0))
         

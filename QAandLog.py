@@ -54,7 +54,7 @@ async def perform_qa_and_log(client, dataset_name, query, vector_weight, top_k, 
             existing_chat = None
             try:
                 # 列出所有聊天并查找匹配的
-                chats = client.list_chats()
+                chats = client.list_chats(name=chat_name)
                 for chat in chats:
                     if getattr(chat, 'name', '') == chat_name:
                         existing_chat = chat

@@ -65,9 +65,11 @@ def run_main_py():
         process = subprocess.Popen(['python', 'main.py'], 
                                   stdout=subprocess.PIPE, 
                                   stderr=subprocess.PIPE,
-                                  text=True)
+                               )
         stdout, stderr = process.communicate()
-        
+        # 手动解码输出，使用utf-8编码
+        stdout = stdout.decode('utf-8', errors='replace')
+        stderr = stderr.decode('utf-8', errors='replace')
         if process.returncode != 0:
             logging.error(f"运行main.py失败: {stderr}")
             return False
