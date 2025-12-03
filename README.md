@@ -1,4 +1,4 @@
-# AutoRAG 知识库自动化评分系统
+# Retrieval-Augmented Generation(RAG) Supported Methodology for Evaluating Management Efforts Contributed to Promoting Low Carbon Practice
 
 本项目通过RAGFlow API实现知识库的创建、管理和查询，并能够自动对文档内容进行评分。
 
